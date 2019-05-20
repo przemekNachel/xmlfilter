@@ -17,7 +17,7 @@ public class CsvReader {
         return csv;
     }
 
-    private String[] read(String filePath) {
+    public String[] read(String filePath) {
         String lines = "";
         try {
             lines = new String(Files.readAllBytes(Paths.get(filePath)));

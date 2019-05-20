@@ -1,0 +1,13 @@
+<filter>
+    <or>
+        <and>
+            <check type="equals" field="sender" value="ABCD" />
+        </and>
+        <and>
+            <check type="equals" field="sender" value="ABCD" />
+        </and>
+    </or>
+    <or>
+        <check type="equals" field="sender" value="ABCD" />
+    </or>
+</filter>
