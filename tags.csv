@@ -16,7 +16,7 @@
 30,lastmkt
 29,lastcapacity
 54,side
-10006,businessstream
+10006,busstream
 60,transacttime
 382,nocontrabrokers
 375,contrabroker
@@ -29,3 +29,8 @@
 48,securityid
 10,checksum
 29,capacity
+375,broker
+30,market
+9930,cptytype
+11999,truefalseflag
+528,ordercapacity
