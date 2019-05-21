@@ -1,8 +1,97 @@
 <filter>
     <or>
-        <check type="equals" field="sender" value="ABCdD" />
-        <not>
-            <check type="equals" field="sender" value="ABsCD" />
-        </not>
+        <and>
+            <check type="equals" field="sender" value="ABCD" />
+            <check type="in" field="market" value="CHIX,BATE,XLON,XBRU,XPAR,XAMS,XLIS" />
+        </and>
+        <check type="in" field="sender" value="ABC,HVABC,XYZAB,XY" />
+        <check type="matches" field="sender" value="^HV-.*$" />
+        <and>
+            <check type="equals" field="sender" value="QWE" />
+            <check type="in" field="market" value="XBRU,XCSE,XSTO,XHEL,XAMS,BATE,TRQX,XETR,XLIS,XPAR,CHIX,XVTX,XLON"/>
+        </and>
+        <and>
+            <check type="in" field="sender" value="BAPP,XY" />
+            <or>
+                <and>
+                    <check type="in" field="sender" value="BAPP,XY" />
+                    <check type="in" field="ordercapacity" value="P,G" />
+                    <or>
+                        <check type="in" field="bookingtype" value="0"/>
+                        <and>
+                            <check type="in" field="sender" value="TYUIO,ASDF"/>
+                            <check type="in" field="bookingtype" value="E"/>
+                        </and>
+                    </or>
+                    <check type="in" field="cptytype" value="A"/>
+                    <or>
+                        <and>
+                            <check type="equals" field="truefalseflag" value="T" />
+                            <check type="in" field="sender" value="BAPP" />
+                        </and>
+                        <check type="in" field="sender" value="TYUIO,ASDF,XY" />
+                    </or>
+                    <not>
+                        <check type="in" field="account" value="XXF1,XXR1,XXE1,XX$1" />
+                    </not>
+                </and>
+                <and>
+                    <check type="in" field="sender" value="BAPP,XY" />
+                    <check type="equals" field="capacity" value="4" />
+                    <check type="equals" field="accounttype" value="C" />
+                    <check type="equals" field="cptytype" value="B" />
+                    <check type="equals" field="truefalseflag" value="T" />
+                </and>
+                <and>
+                    <check type="in" field="market" value="XSWX,XVTX" />
+                    <or>
+                        <and>
+                            <check type="equals" field="capacity" value="1" />
+                            <check type="equals" field="bookingtype" value="0"/>
+                        </and>
+                        <and>
+                            <check type="equals" field="capacity" value="4" />
+                            <not>
+                                <check type="equals" field="bookingtype" value="0"/>
+                            </not>
+                        </and>
+                    </or>
+                    <not>
+                        <check type="equals" field="broker" value="ASDF" />
+                    </not>
+                </and>
+                <and>
+                    <not>
+                        <check type="in" field="busstream" value="8,B,C" />
+                    </not>
+                    <or>
+                        <check type="in" field="market" value="XLIS,XDUB,XPOS,BLOX,XHFT,XSMP,XETI,XBUD,XPRA,XWBO,XWAR,XATH,RTSX,XCAI,XDFM,DIFX,XFRA,XLUX,XIST,XTAE,XSTO,XCSE,XOSL,XHEL,XBRU,XAMS,XUBS,XPAR,XMIL,XMCE,XBUL,XICE,XKUW,XCAS,DSMD,PFTS,XADS,XMIC,BATE,TRQX,XETR,XLON,CHIX,AQXE" />
+                        <and>
+                            <check type="in" field="market" value="XOFF" />
+                            <not>
+                                <check type="in" field="capacity" value="2,3" />
+                            </not>
+                            <or>
+                                <check type="matches" field="broker" value="49$" />
+                                <check type="in" field="broker" value="12345,98765,287364,AERT,837432" />
+                            </or>
+                        </and>
+                    </or>
+                </and>
+                <and>
+                    <check type="in" field="busstream" value="8,B,C" />
+                    <check type="equals" field="market" value="BATE" />
+                    <check type="in" field="account" value="POIU,POI1" />
+                </and>
+                <and>
+                    <check type="in" field="market" value="XOFF" />
+                    <check type="in" field="capacity" value="2,3" />
+                    <not>
+                        <check type="in" field="account" value="TY3$,F590,DGTY,TH5$,TR1$,RDDK,FO76" />
+                    </not>
+                </and>
+            </or>
+        </and>
+        <check type="equals" field="sender" value="ASDF" />
     </or>
 </filter>
