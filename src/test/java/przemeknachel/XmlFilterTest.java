@@ -15,7 +15,7 @@ public class XmlFilterTest {
 
     @Test
     public void test_true() {
-        Assert.assertTrue(xmlFilter.check("8=FIX.4.4|9=348|115=ABCD|"));
+        Assert.assertTrue(xmlFilter.check("115=ASDF|"));
     }
 
     @Test
