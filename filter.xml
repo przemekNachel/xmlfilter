@@ -2,7 +2,7 @@
     <or>
         <check type="equals" field="sender" value="ABCdD" />
         <not>
-            <check type="equals" field="sender" value="ABCD" />
+            <check type="equals" field="sender" value="ABsCD" />
         </not>
     </or>
 </filter>

@@ -3,7 +3,6 @@ package przemeknachel;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,37 +14,25 @@ import java.util.Arrays;
 public class XmlFilter {
 
 
-    private final Document doc;
+    private final Node doc;
     private String stringToCheck;
 
     public XmlFilter(String filePath) {
-        doc = getDocumentNode(filePath);
+        doc = getDocumentNode(filePath).getChildNodes().item(0);
     }
 
     public boolean check(String string) {
         stringToCheck = string;
-
-        Node node = doc.getChildNodes().item(0);
-        if(node != null && node.getNodeName().equals("filter")) {
-            return evaluate(node);
+        if(doc != null && doc.getNodeName().equals("filter")) {
+            return evaluate(doc.getChildNodes().item(1));
         }
+        System.out.println("no filter tag");
         return false;
     }
 
-    private boolean evaluate(Node node) {
-        NodeList nodeList = node.getChildNodes();
-        if (nodeList.getLength() == 0) {
-            return evaluateSingleNode(node);
-        } else {
-            for(int i = 0; i < node.getChildNodes().getLength(); i++) {
-                Node child = node.getChildNodes().item(i);
-                if(isCorrectNode(child)) {
-                    return evaluateSingleNode(child);
 
-                }
-            }
-        }
-        return false;
+    private boolean evaluate(Node node) {
+        return evaluateSingleNode(node);
     }
 
     private boolean evaluateSingleNode(Node node) {
@@ -90,7 +77,8 @@ public class XmlFilter {
         for(int i = 0; i < node.getChildNodes().getLength(); i++) {
             Node child = node.getChildNodes().item(i);
             if(isCorrectNode(child)) {
-                return !evaluate(child);
+                boolean df = !evaluate(child);
+                return df;
             }
         }
         return true;

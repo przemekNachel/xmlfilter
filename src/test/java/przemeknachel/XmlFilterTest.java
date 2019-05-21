@@ -20,6 +20,6 @@ public class XmlFilterTest {
 
     @Test
     public void test_false() {
-        Assert.assertFalse(xmlFilter.check("8=FIX.4,5|9=null|115=ABCE|"));
+        Assert.assertFalse(xmlFilter.check("8=FIX.4,5|9=null|115=ABsCD|"));
     }
 }
