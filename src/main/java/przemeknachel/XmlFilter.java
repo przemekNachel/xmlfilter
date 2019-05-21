@@ -3,15 +3,14 @@ package przemeknachel;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.swing.text.html.HTML;
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLOutput;
+import java.util.Arrays;
 
 public class XmlFilter {
 
@@ -34,34 +33,74 @@ public class XmlFilter {
     }
 
     private boolean evaluate(Node node) {
-        for(int i = 0; i < node.getChildNodes().getLength(); i++) {
-            switch (node.getChildNodes().item(i).getNodeName()) {
-                case "or":
-                    return evaluateOr(node.getChildNodes().item(i));
+        NodeList nodeList = node.getChildNodes();
+        if (nodeList.getLength() == 0) {
+            return evaluateSingleNode(node);
+        } else {
+            for(int i = 0; i < node.getChildNodes().getLength(); i++) {
+                Node child = node.getChildNodes().item(i);
+                if(isCorrectNode(child)) {
+                    return evaluateSingleNode(child);
 
-                case "and":
-                    return evaluateAnd(node.getChildNodes().item(i));
-
-                case "not":
-                    return evaluateNot(node.getChildNodes().item(i));
-
-                case "check":
-                    return evaluateCheck(node.getChildNodes().item(i));
+                }
             }
         }
         return false;
     }
 
+    private boolean evaluateSingleNode(Node node) {
+        String nodeName = node.getNodeName();
+        switch (nodeName) {
+            case "or":
+                return evaluateOr(node);
+
+            case "and":
+                return evaluateAnd(node);
+
+            case "not":
+                return evaluateNot(node);
+
+            case "check":
+                return evaluateCheck(node);
+        }
+        return false;
+    }
+
     private boolean evaluateOr(Node node) {
-        return true;
+        for(int i = 0; i < node.getChildNodes().getLength(); i++) {
+            Node child = node.getChildNodes().item(i);
+            if(isCorrectNode(child) && evaluate(child)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean evaluateAnd(Node node) {
+        for(int i = 0; i < node.getChildNodes().getLength(); i++) {
+            Node child = node.getChildNodes().item(i);
+            if(isCorrectNode(child) && !evaluate(child)) {
+                return false;
+            }
+        }
         return true;
     }
 
     private boolean evaluateNot(Node node) {
+        for(int i = 0; i < node.getChildNodes().getLength(); i++) {
+            Node child = node.getChildNodes().item(i);
+            if(isCorrectNode(child)) {
+                return !evaluate(child);
+            }
+        }
         return true;
+    }
+
+    private boolean isCorrectNode(Node node) {
+        String name = node.getNodeName();
+        String[] correctNames = new String[]{"and", "or", "not", "check"};
+        if (Arrays.asList(correctNames).contains(name)) return true;
+        return false;
     }
 
     private boolean evaluateCheck(Node node) {
